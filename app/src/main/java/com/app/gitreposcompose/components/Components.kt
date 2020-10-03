@@ -12,13 +12,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.gitreposcompose.model.RepositoriesModel
+import com.app.gitreposcompose.util.statusBarPadding
 import dev.chrisbanes.accompanist.picasso.PicassoImage
 
 @Composable
-fun ReposListItem(repositoriesModelItem: RepositoriesModel.RepositoriesModelItem) {
+fun ReposListItem(modifier: Modifier = Modifier, repositoriesModelItem: RepositoriesModel.RepositoriesModelItem) {
     Card(
             shape = RoundedCornerShape(5.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth()
                     .wrapContentHeight()
                     .padding(10.dp)
     ) {
@@ -49,8 +50,12 @@ fun ReposListItem(repositoriesModelItem: RepositoriesModel.RepositoriesModelItem
 @Composable
 fun ReposList(repositoriesModel: RepositoriesModel?) {
     ScrollableColumn {
-        repositoriesModel?.forEach { repositoriesModelItem ->
-            ReposListItem(repositoriesModelItem = repositoriesModelItem)
+        repositoriesModel?.forEachIndexed { index, repositoriesModelItem ->
+            if (index == 0) {
+                ReposListItem(modifier = Modifier.statusBarPadding(), repositoriesModelItem = repositoriesModelItem)
+            } else {
+                ReposListItem(repositoriesModelItem = repositoriesModelItem)
+            }
         }
     }
 }

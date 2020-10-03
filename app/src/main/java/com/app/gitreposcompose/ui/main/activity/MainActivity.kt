@@ -1,4 +1,4 @@
-package com.app.gitreposcompose.ui.main
+package com.app.gitreposcompose.ui.main.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -18,6 +18,8 @@ import com.app.gitreposcompose.components.ReposList
 import com.app.gitreposcompose.model.ResultData
 import com.app.gitreposcompose.theming.GitReposComposeTheme
 import com.app.gitreposcompose.ui.main.viewmodel.MainViewModel
+import com.app.gitreposcompose.util.ProvideDisplayInsets
+import com.app.gitreposcompose.util.statusBarPadding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,24 +43,27 @@ class MainActivity : AppCompatActivity() {
 fun ReposData(mainViewModel: MainViewModel) {
     val dataState = mainViewModel.repositoriesListLiveData.observeAsState()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        when (val resultData = dataState.value) {
-            is ResultData.Loading -> {
-                LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            is ResultData.Success -> {
-                val repositoriesModel = resultData.data
-                ReposList(repositoriesModel = repositoriesModel)
-            }
-            is ResultData.Failed -> {
-                Text(text = "Failed to load data.")
-            }
-            is ResultData.Exception -> {
-                Text(text = "Something went wrong. Please try again!")
+    ProvideDisplayInsets {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            when (val resultData = dataState.value) {
+                is ResultData.Loading -> {
+                    LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth()
+                            .statusBarPadding()
+                    )
+                }
+                is ResultData.Success -> {
+                    val repositoriesModel = resultData.data
+                    ReposList(repositoriesModel = repositoriesModel)
+                }
+                is ResultData.Failed -> {
+                    Text(text = "Failed to load data.")
+                }
+                is ResultData.Exception -> {
+                    Text(text = "Something went wrong. Please try again!")
+                }
             }
         }
     }

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitReposCompose">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.GitReposCompose.NoActionBar">
             <intent-filter>
