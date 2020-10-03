@@ -12,7 +12,7 @@
 **GitReposCompose** is an Android application 📱 for showcasing Jetpack Compose for building declarative UI in Android. This demo app uses Github public API for fetching public repositories.
 
 ## About
-. This is a demo application for showcasing UI components like Rows, Columns etc. Also, this demo uses MVVM architecture along with HILT dependency injection library. This demo app also uses Retrofit for calling RestApi's and binding the data to UI using states in #JetpackCompose.
+This is a demo application for showcasing UI components like Rows, Columns etc. Also, this demo uses MVVM architecture along with HILT dependency injection library. This demo app also uses Retrofit for calling RestApi's and binding the data to UI using states in #JetpackCompose.
 - Clean and Simple Material UI.
 - It supports dark theme too 🌗.
 
