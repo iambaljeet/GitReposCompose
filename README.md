@@ -1,3 +1,5 @@
+![](https://github.com/iambaljeet/GitReposCompose/blob/master/art/gitComposeUI.png)
+
 # GitReposCompose
 
 [![GitHub license](https://img.shields.io/github/license/iambaljeet/GitReposCompose)](LICENSE)
