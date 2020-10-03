@@ -14,7 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
-import com.app.gitreposcompose.ReposList
+import com.app.gitreposcompose.components.ReposList
 import com.app.gitreposcompose.model.ResultData
 import com.app.gitreposcompose.theming.GitReposComposeTheme
 import com.app.gitreposcompose.ui.main.viewmodel.MainViewModel

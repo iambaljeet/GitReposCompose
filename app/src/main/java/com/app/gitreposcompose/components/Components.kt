@@ -1,4 +1,4 @@
-package com.app.gitreposcompose
+package com.app.gitreposcompose.components
 
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
