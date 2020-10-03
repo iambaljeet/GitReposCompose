@@ -18,6 +18,7 @@ buildscript {
     ext.glide_version = "4.11.0"
     ext.hilt_version = "2.29.1-alpha"
     ext.hilt_extensions_version = "1.0.0-alpha02"
+    ext.accompanist_version = "0.3.0"
 
     repositories {
         google()
