@@ -1,38 +1,38 @@
 package com.app.gitreposcompose.ui.main.activity
 
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Text
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.setContent
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.gitreposcompose.components.ReposList
 import com.app.gitreposcompose.model.ResultData
 import com.app.gitreposcompose.theming.GitReposComposeTheme
 import com.app.gitreposcompose.ui.main.viewmodel.MainViewModel
-import com.app.gitreposcompose.util.ProvideDisplayInsets
-import com.app.gitreposcompose.util.statusBarPadding
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private val mainViewModel: MainViewModel by viewModels()
-
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             GitReposComposeTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    mainViewModel.getRepositoriesList("1")
-                    ReposData(mainViewModel)
+                ProvideWindowInsets {
+                    Surface(color = MaterialTheme.colors.background) {
+                        ReposData()
+                    }
                 }
             }
         }
@@ -40,18 +40,20 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun ReposData(mainViewModel: MainViewModel) {
+fun ReposData() {
+    val mainViewModel: MainViewModel = viewModel()
     val dataState = mainViewModel.repositoriesListLiveData.observeAsState()
-
-    ProvideDisplayInsets {
         Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (val resultData = dataState.value) {
                 is ResultData.Loading -> {
                     LinearProgressIndicator(
-                        modifier = Modifier.fillMaxWidth()
-                            .statusBarPadding()
+                        modifier = Modifier.
+                        fillMaxWidth()
                     )
                 }
                 is ResultData.Success -> {
@@ -66,5 +68,4 @@ fun ReposData(mainViewModel: MainViewModel) {
                 }
             }
         }
-    }
 }

@@ -4,9 +4,8 @@ package com.app.gitreposcompose.model
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 class RepositoriesModel : ArrayList<RepositoriesModel.RepositoriesModelItem>(){
     @SuppressLint("ParcelCreator")
@@ -146,21 +145,5 @@ class RepositoriesModel : ArrayList<RepositoriesModel.RepositoriesModelItem>(){
             @SerializedName("url")
             var url: String?
         ) : Parcelable
-    }
-}
-
-class DiffUtilRepositoriesModelItem: DiffUtil.ItemCallback<RepositoriesModel.RepositoriesModelItem>() {
-    override fun areItemsTheSame(
-            oldItem: RepositoriesModel.RepositoriesModelItem,
-            newItem: RepositoriesModel.RepositoriesModelItem
-    ): Boolean {
-        return newItem.id == oldItem.id
-    }
-
-    override fun areContentsTheSame(
-            oldItem: RepositoriesModel.RepositoriesModelItem,
-            newItem: RepositoriesModel.RepositoriesModelItem
-    ): Boolean {
-        return newItem == oldItem
     }
 }

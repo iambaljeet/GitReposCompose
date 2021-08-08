@@ -1,30 +1,33 @@
 package com.app.gitreposcompose.ui.main.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.app.gitreposcompose.model.RepositoriesModel
 import com.app.gitreposcompose.model.ResultData
-import com.app.gitreposcompose.usecase.DataUseCase
+import com.app.gitreposcompose.repository.DataRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
-    private val dataUseCase: DataUseCase
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val dataRepository: DataRepository
 ): ViewModel() {
-    private var _repositoriesListLiveData: LiveData<ResultData<RepositoriesModel>> = MutableLiveData()
+    private var _repositoriesListLiveData: MutableLiveData<ResultData<RepositoriesModel>> = MutableLiveData()
     val repositoriesListLiveData: LiveData<ResultData<RepositoriesModel>> get() = _repositoriesListLiveData
 
-    fun getRepositoriesList(since: String) {
-        _repositoriesListLiveData = liveData(Dispatchers.IO) {
-            emit(ResultData.Loading())
-            try {
-                emit(dataUseCase.getRepositoriesList(since = since))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(ResultData.Exception())
+    private fun getRepositoriesList(since: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataRepository.getRepositoriesList(since = since) { result ->
+                _repositoriesListLiveData.postValue(result)
             }
         }
+    }
+
+    init {
+        getRepositoriesList("1")
     }
 }
